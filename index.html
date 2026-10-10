@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malak - A Love Story ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Lato', sans-serif;
+      background: #0a0010;
+      color: #ffe0f0;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0010; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,20,147,0.4); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,20,147,0.7); }
+
+    /* ===== GALAXY BACKGROUND ===== */
+    .galaxy-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, #1a0030 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, #2d0028 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 80%, #1f0022 0%, transparent 60%),
+        linear-gradient(135deg, #0a0010, #1a0025, #0d0018);
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: twinkle linear infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.1; transform: scale(0.8); }
+      to   { opacity: 1;   transform: scale(1.4); }
+    }
+    .floating-heart-bg {
+      position: absolute;
+      bottom: -40px;
+      animation: floatUp linear infinite;
+      opacity: 0.7;
+      filter: drop-shadow(0 0 8px #ff69b4);
+      user-select: none;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.8; }
+      50%  { transform: translateY(-50vh) translateX(20px) rotate(15deg); opacity: 0.5; }
+      100% { transform: translateY(-110vh) translateX(-10px) rotate(-10deg); opacity: 0; }
+    }
+
+    /* ===== LOCK SCREEN ===== */
+    #lock-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0a0010, #1a0025, #0d0018);
+    }
+    #lock-screen.hidden { display: none; }
+    .lock-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    /* 3D Heart */
+    .heart-3d {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      animation: heartbeat3d 1.4s ease-in-out infinite;
+      filter: drop-shadow(0 0 40px #ff1493) drop-shadow(0 0 80px #c71585);
+    }
+    .heart-3d::before, .heart-3d::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493, #c71585);
+      border-radius: 50% 50% 0 0;
+      box-shadow: 0 0 30px #ff1493, 0 0 60px #c71585;
+    }
+    .heart-3d::before { left: 50px; top: 0; transform: rotate(-45deg); transform-origin: 0 100%; }
+    .heart-3d::after  { left: 0;    top: 0; transform: rotate(45deg);  transform-origin: 100% 100%; }
+    .heart-inner {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .heart-text {
+      position: relative;
+      z-index: 3;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: white;
+      text-shadow: 0 0 10px rgba(255,255,255,0.8);
+      text-align: center;
+      margin-top: 40px;
+    }
+    @keyframes heartbeat3d {
+      0%, 100% { transform: scale(1) rotate(-5deg); }
+      50%       { transform: scale(1.15) rotate(5deg); }
+    }
+
+    /* Lock Form */
+    .lock-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255,20,147,0.08);
+      border: 1px solid rgba(255,105,180,0.3);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 40px rgba(255,20,147,0.2);
+      min-width: 300px;
+    }
+    .lock-hint { font-family: 'Playfair Display', serif; color: #ffb3d9; font-size: 1rem; text-align: center; }
+    .lock-input {
+      width: 100%;
+      padding: 0.85rem 1.2rem;
+      border-radius: 50px;
+      border: 2px solid rgba(255,105,180,0.5);
+      background: rgba(255,20,147,0.1);
+      color: white;
+      font-size: 1.1rem;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      letter-spacing: 0.2em;
+    }
+    .lock-input:focus { border-color: #ff69b4; box-shadow: 0 0 20px rgba(255,105,180,0.5); }
+    .lock-input::placeholder { color: rgba(255,180,210,0.4); }
+    .lock-button {
+      padding: 0.85rem 2.5rem;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #ff69b4, #ff1493, #c71585);
+      color: white;
+      font-size: 1.1rem;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(255,20,147,0.5);
+    }
+    .lock-button:hover { transform: scale(1.05); box-shadow: 0 0 35px rgba(255,20,147,0.8); }
+    .lock-error { color: #ff6b9d; font-size: 0.9rem; display: none; animation: fadeIn 0.3s ease; }
+    .lock-error.visible { display: block; }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%       { transform: translateX(-10px); }
+      40%       { transform: translateX(10px); }
+      60%       { transform: translateX(-8px); }
+      80%       { transform: translateX(8px); }
+    }
+    .shake { animation: shake 0.5s ease-in-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== MAIN PAGE ===== */
+    #main-page { display: none; position: relative; min-height: 100vh; z-index: 1; }
+    #main-page.visible { display: block; }
+
+    /* ===== HERO ===== */
+    .hero-header { position: relative; z-index: 2; text-align: center; padding: 5rem 2rem 3rem; }
+    .hero-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffb3d9, #ff69b4, #ff1493, #c71585);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(255,20,147,0.6));
+      animation: titlePulse 3s ease-in-out infinite;
+    }
+    @keyframes titlePulse {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(255,20,147,0.6)); }
+      50%       { filter: drop-shadow(0 0 40px rgba(255,20,147,1)); }
+    }
+    .hero-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      color: #ffb3d9;
+      margin-top: 1rem;
+    }
+
+    /* ===== SECTIONS ===== */
+    .section { position: relative; z-index: 2; padding: 5rem 1.5rem; }
+    .section-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2.5rem; }
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff85c2, #ff1493);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 10px rgba(255,20,147,0.4));
+      text-align: center;
+    }
+    .section-subtitle { font-family: 'Playfair Display', serif; font-style: italic; color: #ffb3d9; font-size: 1.1rem; text-align: center; }
+
+    /* ===== LOVE COUNTER ===== */
+    .counter-section { background: linear-gradient(180deg, transparent, rgba(50,0,60,0.3), transparent); }
+    .counter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; width: 100%; max-width: 700px; }
+    @media (max-width: 600px) { .counter-grid { grid-template-columns: repeat(2, 1fr); } }
+    .counter-card {
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      background: rgba(255,20,147,0.08);
+      border: 1px solid rgba(255,105,180,0.3);
+      border-radius: 16px;
+      padding: 1.5rem 1rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255,20,147,0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .counter-card:hover { transform: translateY(-4px); box-shadow: 0 0 30px rgba(255,20,147,0.3); }
+    .counter-value {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffb3d9, #ff1493);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .counter-label { font-size: 0.85rem; color: #ffb3d9; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.8; }
+
+    /* ===== PHOTO ===== */
+    .photo-wrap { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
+    .photo-frame { position: relative; border-radius: 20px; overflow: visible; }
+    .photo-img {
+      display: block;
+      max-width: min(400px, 90vw);
+      width: 100%;
+      border-radius: 20px;
+      border: 3px solid rgba(255,105,180,0.5);
+      box-shadow: 0 0 30px rgba(255,20,147,0.4), 0 0 60px rgba(199,21,133,0.2);
+      animation: photoGlow 3s ease-in-out infinite alternate;
+      object-fit: cover;
+    }
+    @keyframes photoGlow {
+      from { box-shadow: 0 0 30px rgba(255,20,147,0.4), 0 0 60px rgba(199,21,133,0.2); border-color: rgba(255,105,180,0.5); }
+      to   { box-shadow: 0 0 50px rgba(255,20,147,0.7), 0 0 100px rgba(199,21,133,0.4); border-color: rgba(255,20,147,0.9); }
+    }
+    .photo-glow { position: absolute; inset: -20px; background: radial-gradient(ellipse, rgba(255,20,147,0.2), transparent 70%); border-radius: 30px; z-index: -1; }
+    .music-btn {
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      border: 2px solid rgba(255,105,180,0.5);
+      background: rgba(255,20,147,0.1);
+      color: #ffb3d9;
+      font-size: 1.05rem;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      backdrop-filter: blur(8px);
+    }
+    .music-btn:hover, .music-btn.playing {
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 0 25px rgba(255,20,147,0.5);
+      transform: scale(1.03);
+    }
+
+    /* ===== MESSAGE ===== */
+    .message-section { background: linear-gradient(180deg, transparent, rgba(40,0,50,0.4), transparent); }
+    .open-msg-btn {
+      padding: 1.1rem 3rem;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #c71585, #ff1493, #ff69b4);
+      color: white;
+      font-size: 1.2rem;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255,20,147,0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .open-msg-btn:hover { transform: scale(1.07); box-shadow: 0 0 50px rgba(255,20,147,0.8); }
+    .message-box {
+      width: 100%;
+      max-width: 700px;
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+      background: rgba(255,20,147,0.07);
+      border: 1px solid rgba(255,105,180,0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 0 40px rgba(255,20,147,0.15);
+      backdrop-filter: blur(12px);
+    }
+    .message-box.visible { display: flex; }
+    .message-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: #ffe0f0;
+      white-space: pre-wrap;
+      max-height: 400px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      padding-right: 0.5rem;
+    }
+    .message-text::-webkit-scrollbar { width: 4px; }
+    .message-text::-webkit-scrollbar-thumb { background: rgba(255,105,180,0.4); border-radius: 2px; }
+    .cursor { display: inline-block; animation: blink 1s step-end infinite; color: #ff69b4; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .close-msg-btn {
+      align-self: center;
+      padding: 0.7rem 2rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255,105,180,0.4);
+      background: rgba(255,20,147,0.1);
+      color: #ffb3d9;
+      font-size: 1rem;
+      font-family: 'Dancing Script', cursive;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .close-msg-btn:hover { background: rgba(255,20,147,0.2); border-color: rgba(255,105,180,0.7); }
+
+    /* ===== VIDEO ===== */
+    .video-section { padding: 4rem 1.5rem; }
+    .video-wrapper { position: relative; width: 100%; max-width: 700px; }
+    .romantic-video {
+      width: 100%;
+      border-radius: 20px;
+      border: 2px solid rgba(255,105,180,0.4);
+      box-shadow: 0 0 40px rgba(255,20,147,0.3), 0 0 80px rgba(199,21,133,0.1);
+      display: block;
+      background: #0a0010;
+    }
+    .video-glow { position: absolute; inset: -30px; background: radial-gradient(ellipse, rgba(255,20,147,0.15), transparent 70%); border-radius: 40px; z-index: -1; pointer-events: none; }
+
+    /* ===== QUIZ ===== */
+    .quiz-section { background: linear-gradient(180deg, transparent, rgba(30,0,60,0.3), transparent); }
+    .quiz-intro { font-family: 'Playfair Display', serif; font-style: italic; color: #ffb3d9; font-size: 1.1rem; text-align: center; }
+    .quiz-btn-primary {
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      color: white;
+      font-size: 1.1rem;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255,20,147,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .quiz-btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 35px rgba(255,20,147,0.7); }
+    .quiz-game-area { width: 100%; max-width: 650px; display: none; flex-direction: column; gap: 1.5rem; }
+    .quiz-game-area.visible { display: flex; }
+    .quiz-progress { text-align: center; color: #ff85c2; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .quiz-question-box {
+      background: rgba(255,20,147,0.06);
+      border: 1px solid rgba(255,105,180,0.25);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .quiz-question { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #ffe0f0; text-align: center; }
+    .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    @media (max-width: 500px) { .quiz-options { grid-template-columns: 1fr; } }
+    .quiz-option {
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,105,180,0.3);
+      background: rgba(255,20,147,0.08);
+      color: #ffb3d9;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-align: center;
+      font-family: 'Lato', sans-serif;
+    }
+    .quiz-option:hover { background: rgba(255,20,147,0.2); border-color: rgba(255,105,180,0.6); transform: scale(1.02); }
+    .quiz-option.correct { background: linear-gradient(135deg, rgba(72,199,116,0.3), rgba(50,160,90,0.3)); border-color: #48c774; color: #a8ffcc; }
+    .quiz-option.wrong   { background: linear-gradient(135deg, rgba(255,70,70,0.3), rgba(199,21,21,0.3));  border-color: #ff4646; color: #ffaaaa; }
+    .quiz-result-area { display: none; flex-direction: column; align-items: center; }
+    .quiz-result-area.visible { display: flex; }
+    .result-box {
+      background: rgba(255,20,147,0.1);
+      border: 2px solid rgba(255,105,180,0.5);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      box-shadow: 0 0 50px rgba(255,20,147,0.3);
+      backdrop-filter: blur(12px);
+      animation: resultAppear 0.5s ease;
+    }
+    @keyframes resultAppear { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .result-score {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffb3d9, #ff1493);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .result-message { font-family: 'Dancing Script', cursive; font-size: 1.4rem; color: #ffb3d9; }
+
+    /* ===== HEART BUTTON ===== */
+    .heart-btn-section { text-align: center; }
+    .heart-btn-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 300px;
+      min-height: 200px;
+      cursor: pointer;
+    }
+    .big-heart-btn {
+      font-size: 5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      animation: bigHeartbeat 1.2s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px #ff1493) drop-shadow(0 0 40px #c71585);
+      transition: transform 0.1s;
+      user-select: none;
+    }
+    .big-heart-btn:active { transform: scale(0.85) !important; }
+    @keyframes bigHeartbeat {
+      0%, 100% { transform: scale(1); }
+      14%       { transform: scale(1.2); }
+      28%       { transform: scale(1); }
+      42%       { transform: scale(1.15); }
+      70%       { transform: scale(1); }
+    }
+    .floating-msg {
+      position: absolute;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1rem;
+      color: #ff85c2;
+      pointer-events: none;
+      white-space: nowrap;
+      animation: floatMessage 2.5s ease-out forwards;
+      text-shadow: 0 0 10px rgba(255,20,147,0.8);
+      z-index: 10;
+    }
+    @keyframes floatMessage {
+      0%   { opacity: 1; transform: translateY(0) scale(0.8); }
+      30%  { opacity: 1; transform: translateY(-30px) scale(1); }
+      100% { opacity: 0; transform: translateY(-100px) scale(1.1); }
+    }
+
+    /* ===== FINAL ===== */
+    .final-section { position: relative; overflow: hidden; padding-bottom: 8rem; }
+    .final-title { font-size: clamp(2.2rem, 5vw, 3.8rem) !important; }
+    .final-message {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #ffb3d9;
+      text-align: center;
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    /* ===== CONFETTI ===== */
+    #confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; display: none; }
+    #confetti-container.active { display: block; }
+    .confetti-piece { position: absolute; top: -20px; animation: confettiFall linear infinite; opacity: 0.9; }
+    @keyframes confettiFall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    .firework-heart { position: absolute; animation: fireworkBurst 1.5s ease-out infinite; pointer-events: none; }
+    @keyframes fireworkBurst {
+      0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+      50%  { transform: scale(1.5) rotate(180deg); opacity: 0.8; }
+      100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
+    }
+
+    /* ===== NAVIGATION ===== */
+    .floating-nav {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: none;
+      gap: 0.4rem;
+      background: rgba(10,0,16,0.85);
+      border: 1px solid rgba(255,105,180,0.3);
+      border-radius: 50px;
+      padding: 0.5rem 0.8rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 0 30px rgba(255,20,147,0.2);
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 95vw;
+    }
+    .floating-nav.visible { display: flex; }
+    .nav-btn {
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      border: none;
+      background: transparent;
+      color: #ff85c2;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+      font-family: 'Lato', sans-serif;
+    }
+    .nav-btn:hover { background: rgba(255,20,147,0.2); color: white; }
+    .nav-top { color: #ffb3d9; font-weight: 600; }
+
+    /* ===== FOOTER ===== */
+    .romantic-footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 3rem 2rem;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.3rem;
+      color: #ff85c2;
+      border-top: 1px solid rgba(255,105,180,0.15);
+      background: linear-gradient(to top, rgba(30,0,40,0.5), transparent);
+    }
+
+    /* ===== WHATSAPP CONTACT BUTTON ===== */
+    .wa-fab {
+      position: fixed; left: 14px; bottom: 14px; z-index: 2000;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #25D366; color: #fff; text-decoration: none;
+      font-family: 'Lato', 'Segoe UI', Tahoma, sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 11px 20px 11px 16px; border-radius: 50px;
+      box-shadow: 0 8px 22px rgba(18,140,126,0.55);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .wa-fab:hover { background: #128C7E; transform: translateY(-2px); }
+    .wa-fab:active { transform: scale(0.96); }
+    .wa-fab svg { width: 20px; height: 20px; fill: #fff; flex: none; }
+    .romantic-footer { padding-bottom: 5.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- WHATSAPP -->
+<a class="wa-fab" href="https://wa.me/201108235028?text=%D8%B9%D8%A7%D9%8A%D8%B2%20%D8%A3%D8%B9%D8%B1%D9%81%20%D8%B9%D8%B1%D9%88%D8%B6%20%D8%A7%D9%84%D9%88%D9%8A%D8%A8%20%D8%B3%D8%A7%D9%8A%D8%AA%D8%B3%20%D8%A5%D9%8A%D9%87" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.4.7 4.7 1.9 6.6L3 29l7.1-2.1c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.5S23 3 16 3zm0 22.8c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.2 1.2 1.3-4-.3-.4a10 10 0 0 1-1.6-5.4C5.5 10 10.2 5.5 16 5.5S26.5 10 26.5 15.5 21.8 25.8 16 25.8zm5.8-7.6c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.700 5.8 5.1.8.4 1.5.6 2 .8.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg>تواصل معايا</a>
+
+<!-- GALAXY -->
+<div class="galaxy-bg" id="galaxy-bg"></div>
+
+<!-- CONFETTI -->
+<div id="confetti-container"></div>
+
+<!-- ===== LOCK SCREEN ===== -->
+<div id="lock-screen">
+  <div class="lock-content">
+    <div class="heart-3d">
+      <div class="heart-inner">
+        <span class="heart-text">Hi Malak ❤️</span>
+      </div>
+    </div>
+    <form class="lock-form" id="lock-form">
+      <p class="lock-hint">Enter the password to open ✨</p>
+      <input type="password" class="lock-input" id="lock-input" placeholder="Password..." autocomplete="new-password" />
+      <button type="submit" class="lock-button">Open My Heart 💖</button>
+      <p class="lock-error" id="lock-error">Wrong password, try again 💔</p>
+    </form>
+  </div>
+</div>
+
+<!-- ===== MAIN PAGE ===== -->
+<div id="main-page">
+
+
+
+  <!-- HERO -->
+  <header class="hero-header">
+    <h1 class="hero-title">For Malak 🌹</h1>
+    <p class="hero-subtitle">A love story written just for you, from Omar ❤️</p>
+  </header>
+
+  <!-- LOVE COUNTER -->
+  <section class="section counter-section" id="counter">
+    <div class="section-inner">
+      <h2 class="section-title">Our Love Story ❤️</h2>
+      <p class="section-subtitle">Together since May 2, 2025</p>
+      <div class="counter-grid">
+        <div class="counter-card"><span class="counter-value" id="c-days">00</span><span class="counter-label">Days</span></div>
+        <div class="counter-card"><span class="counter-value" id="c-hours">00</span><span class="counter-label">Hours</span></div>
+        <div class="counter-card"><span class="counter-value" id="c-minutes">00</span><span class="counter-label">Minutes</span></div>
+        <div class="counter-card"><span class="counter-value" id="c-seconds">00</span><span class="counter-label">Seconds</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO 1 -->
+  <section class="section" id="photo1">
+    <div class="section-inner">
+      <h2 class="section-title">My Favorite Picture 📸</h2>
+      <div class="photo-wrap">
+        <div class="photo-frame">
+          <img src="https://images.unsplash.com/photo-1522033467113-b8db23657b96?auto=format&fit=crop&w=800&q=70" alt="Malak" class="photo-img" loading="lazy" onerror="this.style.display='none'" />
+          <div class="photo-glow"></div>
+        </div>
+        <audio id="music1" src="music1.mp3" loop></audio>
+        <button class="music-btn" id="btn-music1" onclick="toggleMusic('music1','btn-music1')">Play Song 🎵</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROMANTIC MESSAGE -->
+  <section class="section message-section" id="message">
+    <div class="section-inner">
+      <h2 class="section-title">A Message From My Heart 💌</h2>
+      <audio id="music2" src="music2.mp3" loop></audio>
+      <button class="open-msg-btn" id="open-msg-btn" onclick="startMessage()">Read My Love Letter 💖</button>
+      <div class="message-box" id="message-box">
+        <div class="message-text" id="message-text"></div>
+        <button class="close-msg-btn" onclick="closeMessage()">Close 💫</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO 1 -->
+  <section class="section video-section" id="video1">
+    <div class="section-inner">
+      <div class="video-wrapper">
+        <video src="video1.mp4"  loop playsinline class="romantic-video" id="vid1"></video>
+        <div class="video-glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="section quiz-section" id="quiz">
+    <div class="section-inner">
+      <h2 class="section-title">How Well Do You Know Me? 💝</h2>
+      <div id="quiz-start" style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;">
+        <p class="quiz-intro">10 questions about Omar — answer them all! 🌹</p>
+        <button class="quiz-btn-primary" onclick="startQuiz()">Start Game 🎮</button>
+      </div>
+      <div class="quiz-game-area" id="quiz-game-area">
+        <div class="quiz-progress" id="quiz-progress">Question 1 / 10</div>
+        <div class="quiz-question-box">
+          <p class="quiz-question" id="quiz-question"></p>
+          <div class="quiz-options" id="quiz-options"></div>
+        </div>
+      </div>
+      <div class="quiz-result-area" id="quiz-result-area">
+        <div class="result-box">
+          <p class="result-score" id="result-score"></p>
+          <p class="result-message" id="result-message"></p>
+          <button class="quiz-btn-primary" onclick="restartQuiz()">Play Again 🔄</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO 2 -->
+  <section class="section" id="photo2">
+    <div class="section-inner">
+      <h2 class="section-title">Another Beautiful Memory 🌸</h2>
+      <div class="photo-wrap">
+        <div class="photo-frame">
+          <img src="https://images.unsplash.com/photo-1541679368093-5c967ac6de11?auto=format&fit=crop&w=800&q=70" alt="Malak" class="photo-img" loading="lazy" onerror="this.style.display='none'" />
+          <div class="photo-glow"></div>
+        </div>
+        <audio id="music3" src="music3.mp3" loop></audio>
+        <button class="music-btn" id="btn-music3" onclick="toggleMusic('music3','btn-music3')">Play Song 🎵</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HEART BUTTON -->
+  <section class="section heart-btn-section" id="heartbtn">
+    <div class="section-inner">
+      <h2 class="section-title">Click My Heart 💗</h2>
+      <div class="heart-btn-wrapper" id="heart-wrapper" onclick="heartClick(event)">
+        <button class="big-heart-btn">❤️</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL VIDEO -->
+  <section class="section final-section" id="final">
+    <div class="section-inner">
+      <h2 class="section-title final-title">Forever Yours, Omar 💍</h2>
+      <div class="video-wrapper">
+        <video src="https://files.catbox.moe/r7xnsm.mp4"  loop playsinline class="romantic-video" id="vid2"></video>
+        <div class="video-glow"></div>
+      </div>
+      <p class="final-message">Malak, every moment with you is a dream I never want to wake from. I love you more than words can express. 💖</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="romantic-footer">
+    <p>Made with all my love for you, Malak 💖 — Omar</p>
+  </footer>
+
+</div>
+
+<script>
+  /* ===== GALAXY ===== */
+  (function() {
+    const bg = document.getElementById('galaxy-bg');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = 1 + Math.random() * 3;
+      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${size}px;height:${size}px;animation-delay:${Math.random()*5}s;animation-duration:${2+Math.random()*4}s;`;
+      bg.appendChild(s);
+    }
+    for (let i = 0; i < 25; i++) {
+      const h = document.createElement('div');
+      h.className = 'floating-heart-bg';
+      h.textContent = '❤️';
+      h.style.cssText = `left:${Math.random()*100}%;animation-delay:${Math.random()*8}s;animation-duration:${6+Math.random()*8}s;font-size:${12+Math.random()*20}px;`;
+      bg.appendChild(h);
+    }
+  })();
+
+  /* ===== LOCK SCREEN ===== */
+  document.getElementById('lock-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const input = document.getElementById('lock-input');
+    const error = document.getElementById('lock-error');
+    const form  = document.querySelector('.lock-form');
+    if (input.value.trim().toLowerCase() === 'love') {
+      document.getElementById('lock-screen').classList.add('hidden');
+      document.getElementById('main-page').classList.add('visible');
+      startCounter();
+      setupVideoObservers();
+      window.addEventListener('scroll', function() {
+        const nav = document.getElementById('floating-nav');
+        window.scrollY > 300 ? nav.classList.add('visible') : nav.classList.remove('visible');
+      });
+    } else {
+      error.classList.add('visible');
+      form.classList.add('shake');
+      setTimeout(() => { form.classList.remove('shake'); input.value = ''; input.focus(); }, 600);
+      setTimeout(() => error.classList.remove('visible'), 3000);
+    }
+  });
+
+  function goTo(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+
+  /* ===== LOVE COUNTER ===== */
+  function startCounter() {
+    const start = new Date('2025-05-02T00:00:00').getTime();
+    function update() {
+      const diff = Math.max(0, Date.now() - start);
+      document.getElementById('c-days').textContent    = String(Math.floor(diff / 86400000)).padStart(2,'0');
+      document.getElementById('c-hours').textContent   = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+      document.getElementById('c-minutes').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+      document.getElementById('c-seconds').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+    }
+    update();
+    setInterval(update, 1000);
+  }
+
+  /* ===== MUSIC ===== */
+  function toggleMusic(audioId, btnId) {
+    const audio = document.getElementById(audioId);
+    const btn   = document.getElementById(btnId);
+    if (audio.paused) {
+      audio.play().catch(()=>{});
+      btn.textContent = '⏸ Pause Song';
+      btn.classList.add('playing');
+    } else {
+      audio.pause();
+      btn.textContent = 'Play Song 🎵';
+      btn.classList.remove('playing');
+    }
+  }
+
+  /* ===== ROMANTIC MESSAGE ===== */
+  const FULL_MSG = `عارفه يا ملوكتي انا بحبك قد اي، انتي عمري و حياتي كلها ي ملوكة انتي،
+كل يوم بفكر فيكي وبضحك من قلبي لما افتكر ضحكتك الحلوة،
+انتي النور اللي بيملأ حياتي 🌹، وانا ممتن لكل لحظة جمعتنا،
+بحبك لما اتكلم معاكي واتفرج علي عيونك اللمّاعة 🌚🙈،
+انتي روحي وقلبي، وكل لحظة بتمر بحس اني محظوظ انك معايا،
+بحبك أكتر من أي حاجة في الدنيا، وعمري ما هقدر أوصفلك قد اي،
+كل ثانية وانتِ في بالي، وكل حلمي انك تفضلي معايا،
+انتي سبب سعادتي 💖، وانا مستني اليوم اللي نكمل فيه حياتنا سوا،
+بحبك وانا دايمًا هفضل جنبك مهما حصل،
+انتي أكتر حد بيخليني أبتسم وابقى سعيد،
+يا ملوكتي انتِ نصفي التاني،
+بحبك أكتر من أي كلام ممكن يتقال،
+كل يوم معاك هو عيد بالنسبة لي،
+عمري ما حسيت بحب زي اللي حسيت بيه معاكي،
+انتي أغلى من أي حاجة عندي،
+قلبك هو اللي بيهديني ويخليني أكون أفضل،
+بحبك من كل قلبي وروحي 🌹🙈،
+انتِ حياتي وكل حاجة فيها،
+انتي حلمي اللي اتحقق،
+انتي ملاكي ورفيقتي وكل حياتي،
+بحبك بكل التفاصيل، بكل اللحظات الصغيرة والكبيرة،
+انتي الشمس اللي بتنور أيامي 🌞،
+وحياتي من غيرك كانت هتبقى فاضية،
+بحبك أكتر مع كل يوم بيعدي،
+انتي السعادة اللي حسيتها،
+بحبك وانا متأكد اننا مقدر لنا نكمل سوا،
+كل كلمة بحبك مش كفاية توصف شعوري تجاهك،
+انتي كل حاجة حلوة حصلتلي ❤️،
+وحياتي من غيرك كانت هتبقى ناقصة،
+بحبك أكتر من أي حاجة تانية،
+انتِ نصفي التاني، وسر سعادتي،
+انتي كل الدنيا بالنسبة لي 🌚🙈،
+وبحبك اكتر من كل ثانية تمر،
+انتي حلمي الجميل اللي اتحقق،
+انتي قلبي وروحي وعمري،
+وبعد كل ده، بحبك أكتر 😍🥹`;
+
+  let msgInterval = null, msgOpen = false;
+
+  function startMessage() {
+    if (msgOpen) return;
+    msgOpen = true;
+    document.getElementById('open-msg-btn').style.display = 'none';
+    const box = document.getElementById('message-box');
+    box.classList.add('visible');
+    const el = document.getElementById('message-text');
+    el.innerHTML = '';
+    document.getElementById('music2').play().catch(()=>{});
+    let i = 0;
+    msgInterval = setInterval(() => {
+      i++;
+      const stick = el.scrollHeight - el.scrollTop - el.clientHeight < 60; // القارئ لسه تحت؟
+      el.innerHTML = FULL_MSG.slice(0, i).replace(/\n/g, '<br>') + '<span class="cursor">|</span>';
+      if (stick) el.scrollTop = el.scrollHeight;
+      if (i >= FULL_MSG.length) { clearInterval(msgInterval); el.innerHTML = FULL_MSG.replace(/\n/g,'<br>'); }
+    }, 30);
+  }
+
+  function closeMessage() {
+    if (msgInterval) clearInterval(msgInterval);
+    msgOpen = false;
+    document.getElementById('message-box').classList.remove('visible');
+    document.getElementById('open-msg-btn').style.display = '';
+    const m2 = document.getElementById('music2');
+    m2.pause(); m2.currentTime = 0;
+  }
+
+  /* ===== VIDEO OBSERVERS ===== */
+  function setupVideoObservers() {
+    function obs(id, threshold, onIn, onOut) {
+      const v = document.getElementById(id);
+      if (!v) return;
+      new IntersectionObserver(([e]) => { e.isIntersecting ? onIn(v) : onOut(v); }, { threshold }).observe(v);
+    }
+    obs('vid1', 0.5, v => v.play().catch(()=>{}), v => v.pause());
+    obs('vid2', 0.4, v => { v.play().catch(()=>{}); startConfetti(); }, v => { v.pause(); stopConfetti(); });
+  }
+
+  /* ===== CONFETTI ===== */
+  let confettiBuilt = false;
+  function startConfetti() {
+    const c = document.getElementById('confetti-container');
+    if (!confettiBuilt) {
+      const colors = ['#ff69b4','#ff1493','#c71585','#ff85c2','#ffd700','#ff6b6b'];
+      for (let i = 0; i < 60; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-piece';
+        p.style.cssText = `left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s;background:${colors[Math.floor(Math.random()*6)]};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'0'};`;
+        c.appendChild(p);
+      }
+      for (let i = 0; i < 20; i++) {
+        const h = document.createElement('div');
+        h.className = 'firework-heart';
+        h.textContent = '❤️';
+        h.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*2}s;font-size:${14+Math.random()*20}px;`;
+        c.appendChild(h);
+      }
+      confettiBuilt = true;
+    }
+    c.classList.add('active');
+  }
+  function stopConfetti() { document.getElementById('confetti-container').classList.remove('active'); }
+
+  /* ===== QUIZ ===== */
+  const QS = [
+    { q:'What is my favorite color?',                                opts:['Blue','Red','Black','Green'],                                        a:2 },
+    { q:'What month did we first meet?',                             opts:['January','March','October','July'],                                       a:2 },
+    { q:'What is my favorite season?',                               opts:['Spring','Summer','Autumn','Winter'],                                  a:3 },
+    { q:'What do I love most about you?',                            opts:['Your smile','Your laugh','Your eyes','Everything about you'],         a:3 },
+    { q:"What's our favorite song genre?",                           opts:['Pop','Romantic','Jazz','Classical'],                                  a:1 },
+    { q:'Where would I take you on a dream date?',                   opts:['Paris','Under the stars','The beach at sunset','Turkia'],  a:3 },
+    { q:'How many times a day do I think of you?',                   opts:['Once','A few times','Many times','Every single moment'],              a:3 },
+    { q:'What is the first word that comes to mind when I see you?', opts:['Beautiful','Perfect','My world','All of the above'],                  a:3 },
+    { q:'How long have I been in love with you?',                    opts:['A few weeks','A few months','Since the day I met you','My whole life'],a:2 },
+    { q:'What do you mean to me?',                                   opts:['A lot','Everything','More than words can say','My entire universe'],   a:3 },
+  ];
+  let qIdx = 0, qScore = 0, qAnswered = false;
+
+  function startQuiz() {
+    qIdx = 0; qScore = 0; qAnswered = false;
+    document.getElementById('quiz-start').style.display = 'none';
+    document.getElementById('quiz-result-area').classList.remove('visible');
+    document.getElementById('quiz-game-area').classList.add('visible');
+    renderQ();
+  }
+  function renderQ() {
+    qAnswered = false;
+    const q = QS[qIdx];
+    document.getElementById('quiz-progress').textContent = `Question ${qIdx+1} / ${QS.length}`;
+    document.getElementById('quiz-question').textContent = q.q;
+    const opts = document.getElementById('quiz-options');
+    opts.innerHTML = '';
+    q.opts.forEach((opt, i) => {
+      const b = document.createElement('button');
+      b.className = 'quiz-option';
+      b.textContent = opt;
+      b.onclick = () => answerQ(i);
+      opts.appendChild(b);
+    });
+  }
+  function answerQ(i) {
+    if (qAnswered) return;
+    qAnswered = true;
+    const q = QS[qIdx];
+    document.querySelectorAll('.quiz-option').forEach((b, idx) => {
+      if (idx === q.a) b.classList.add('correct');
+      else if (idx === i) b.classList.add('wrong');
+    });
+    if (i === q.a) qScore++;
+    setTimeout(() => { qIdx++; qIdx >= QS.length ? finishQ() : renderQ(); }, 1200);
+  }
+  function finishQ() {
+    document.getElementById('quiz-game-area').classList.remove('visible');
+    document.getElementById('quiz-result-area').classList.add('visible');
+    document.getElementById('result-score').textContent = `${qScore} / ${QS.length} 🌟`;
+    const msgs = ['We need more time together! 😄💓','Not bad! Keep getting to know me 😊💕','You know me so well! Love knows us both 💖','You know me perfectly! We are meant for each other 💍❤️'];
+    document.getElementById('result-message').textContent = qScore >= 9 ? msgs[3] : qScore >= 7 ? msgs[2] : qScore >= 5 ? msgs[1] : msgs[0];
+  }
+  function restartQuiz() {
+    document.getElementById('quiz-result-area').classList.remove('visible');
+    document.getElementById('quiz-start').style.display = 'flex';
+  }
+
+  /* ===== HEART BUTTON ===== */
+  const HEART_MSGS = [
+'بحبك يا ملوكتي 🌚🙈',
+'بموت فيكي ي حياتي ❤️🌚',
+'إنتي روحي الي مقدرش اعيش من غيرها 🤭🙈',
+'انتي كل حياتي 😍🥹',
+'بعشقك ي ملوكة 🥹❤️',
+'ي كل حياتي 🫂❤️'
+];
+  function heartClick(e) {
+    const w = document.getElementById('heart-wrapper');
+    const r = w.getBoundingClientRect();
+    const span = document.createElement('span');
+    span.className = 'floating-msg';
+    span.textContent = HEART_MSGS[Math.floor(Math.random() * HEART_MSGS.length)];
+    span.style.left = (e.clientX - r.left) + 'px';
+    span.style.top  = (e.clientY - r.top)  + 'px';
+    w.appendChild(span);
+    setTimeout(() => span.remove(), 2500);
+  }
+</script>
+</body>
+</html>
